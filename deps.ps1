@@ -25,7 +25,7 @@ Get-PackageProvider NuGet -Force | Out-Null
 ### Install PowerShell Modules
 Write-Host "Installing PowerShell Modules..." -ForegroundColor "Yellow"
 Install-Module Posh-Git -Scope CurrentUser -Force
-Install-Module PSWindowsUpdate -Scope CurrentUser -Force
+#Install-Module PSWindowsUpdate -Scope CurrentUser -Force
 
 
 ### Chocolatey
@@ -51,6 +51,8 @@ choco install Firefox             --limit-output
 choco install Opera               --limit-output
 
 # dev tools and frameworks
+choco install cmdermini           --limit-output
+
 choco install atom                --limit-output
 choco install Fiddler4            --limit-output
 choco install vim                 --limit-output
