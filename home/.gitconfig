@@ -6,6 +6,8 @@
     st = status -s
     # Show the diff between the latest commit and the current state
     d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+    # Use VS Code as difftool from cmd line
+    dt = !"git difftool --tool=code"
     # `git di $number` shows the diff between the state `$number` revisions ago and the current state
     di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
     # Pull in remote changes for the current repository and all its submodules
@@ -75,9 +77,29 @@
     changed = green
     untracked = cyan
     branch = magenta
+
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
+	tool = vsdiffmerge
+[diff]
+	tool = vsdiffmerge
+
+[difftool]
+	prompt = false
+[difftool "code"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+    keepbackup = false
+[difftool "vsdiffmerge"]
+	cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\" \"$LOCAL\" \"$REMOTE\" //t
+    keepbackup = false
+	
+[mergetool]
+	prompt = false
+[mergetool "vsdiffmerge"]
+	cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\" \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\" //m
+	trustexitcode = true
+    keepbackup = false
 
 # URL shorthands
 [url "git@github.com:"]
@@ -95,6 +117,3 @@
 
 [push]
     default = simple
-
-[credential]
-    helper = manager
