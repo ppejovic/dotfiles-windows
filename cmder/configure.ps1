@@ -1,4 +1,4 @@
-$lnk = Join-Path $PSScriptRoot "cmder.lnk"
+$lnk = Join-Path $env:HOME "cmder.lnk"
 
 if ((which cmder) -and !(Test-Path $lnk))    {
     $cmderRoot = Split-Path (which cmder)
