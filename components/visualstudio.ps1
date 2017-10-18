@@ -23,13 +23,6 @@ if ((Test-Path "hklm:\SOFTWARE\Microsoft\VisualStudio\SxS\VS7") -or (Test-Path "
     Remove-Variable vsCommonToolsVersion
     Remove-Variable vsinstall
 
-    $vsSetupRegistryPath = "hklm:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\$vsVersion\Setup"
-    if (${Test-Path $vsSetupRegistryPath} -eq $false) { $vsSetupRegistryPath = "hklm:\SOFTWARE\Microsoft\VisualStudio\$vsVersion\Setup" }
-    $vsVersionUser = (Get-ChildItem $vsSetupRegistryPath -Name | Where-Object {$_ -like "Visual Studio * Prereq*"} | Select-Object -First 1).Substring(14,4)
-    $env:GYP_MSVS_VERSION = $vsVersionUser
-    Remove-Variable vsVersionUser
-    Remove-Variable vsSetupRegistryPath
-
     Append-EnvPathIfExists (Join-Path $env:VSINSTALLDIR "Common7\Tools")
     Append-EnvPathIfExists (Join-Path $env:VSINSTALLDIR "Team Tools\Performance Tools")
     Append-EnvPathIfExists (Join-Path $env:VSINSTALLDIR "VSTSDB\Deploy")
