@@ -1,10 +1,16 @@
 # Basic commands
-function which($name) { Get-Command $name -ErrorAction SilentlyContinue | Select-Object Definition }
+function which($name) { Get-Command $name -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Definition }
 function touch($file) { "" | Out-File $file -Encoding ASCII }
+
+# Text editor
+function txted() { Invoke-Expression "$env:EDITOR $args ." }
 
 # Common Editing needs
 function Edit-Hosts { Invoke-Expression "sudo $(if($env:EDITOR -ne $null)  {$env:EDITOR } else { 'notepad' }) $env:windir\system32\drivers\etc\hosts" }
 function Edit-Profile { Invoke-Expression "$(if($env:EDITOR -ne $null)  {$env:EDITOR } else { 'notepad' }) $profile" }
+
+# Clipboard
+function Clip-LastOutput { $ll | clip }
 
 # Sudo
 function sudo() {
@@ -18,12 +24,8 @@ function sudo() {
 
 # System Update - Update RubyGems, NPM, and their installed packages
 function System-Update() {
-    Install-WindowsUpdate -IgnoreUserInput -IgnoreReboot -AcceptAll
     Update-Module
     Update-Help -Force
-    scoop update
-    gem update --system
-    gem update
     npm install npm -g
     npm update -g
 }
@@ -215,5 +217,65 @@ function Unzip-File {
             Write-Warning -Message "Unexpected Error. Error details: $_.Exception.Message"
         }
     }
+}
+
+function Out-Default
+{
+    [CmdletBinding()]
+    param(
+        [Parameter(ValueFromPipeline=$true)]
+        [psobject]
+        ${InputObject}
+    )
+ 
+    begin
+    {
+        $cachedOutput = New-Object System.Collections.ArrayList
+        
+        $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand(
+            'Out-Default', 
+            [System.Management.Automation.CommandTypes]::Cmdlet)
+            
+        $newPipeline = { & $wrappedCmd @PSBoundParameters }
+        $steppablePipeline = $newPipeline.GetSteppablePipeline()
+        $steppablePipeline.Begin($PSCmdlet)
+    }
+
+    process
+    {
+        ## If we get an input object, add it to our list of objects
+        if($_ -ne $null) { $null = $cachedOutput.Add($_) }
+        while($cachedOutput.Count -gt 500) { $cachedOutput.RemoveAt(0) }
+
+        $steppablePipeline.Process($_)
+    }
+
+    end
+    {
+        ## Be sure we got objects that were not just errors (
+        ## so that we don't wipe out the saved output when we get errors
+        ## trying to work with it.)
+        ## Also don't caputre formatting information, as those objects
+        ## can't be worked with.
+        $uniqueOutput = $cachedOutput | Foreach-Object {  
+            $_.GetType().FullName } | Select -Unique
+        $containsInterestingTypes = ($uniqueOutput -notcontains `
+            "System.Management.Automation.ErrorRecord") -and
+            ($uniqueOutput -notlike `
+                "Microsoft.PowerShell.Commands.Internal.Format.*")
+        ## If we actually had output, and it was interesting information,
+        ## save the output into the $ll variable
+        if(($cachedOutput.Count -gt 0) -and $containsInterestingTypes)
+        {
+            $GLOBAL:ll = $cachedOutput | % { $_ }
+        }
+
+        $steppablePipeline.End()
+    }
+
+    <#
+    .ForwardHelpTargetName Out-Default
+    .ForwardHelpCategory Cmdlet
+    #>
 }
 

@@ -12,6 +12,10 @@ ${function:drop} = { Set-Location ~\Documents\Dropbox }
 ${function:dt} = { Set-Location ~\Desktop }
 ${function:docs} = { Set-Location ~\Documents }
 ${function:dl} = { Set-Location ~\Downloads }
+${function:src} = { Set-Location $Env:SOURCE_CODE }
+
+# Last command output
+${function:_} = { $ll }
 
 # Missing Bash aliases
 Set-Alias time Measure-Command
@@ -73,6 +77,3 @@ Set-Alias unmute Set-SoundUnmute
 
 # Update installed Ruby Gems, NPM, and their installed packages.
 Set-Alias update System-Update
-
-# Set GVim as default vim
-Set-Alias vim gvim
