@@ -137,4 +137,5 @@ if (which code) {
     code --install-extension ms-vscode.csharp
     code --install-extension ms-vscode.PowerShell
     code --install-extension filipw.scriptcsRunner
+    code --install-extension ms-vsts.team
 }
