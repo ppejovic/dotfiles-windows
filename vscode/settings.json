@@ -1,0 +1,6 @@
+{
+    "terminal.external.windowsExec": "cmder",
+    "files.exclude": {
+        "**/.vs": true
+    }
+}
