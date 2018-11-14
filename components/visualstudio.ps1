@@ -23,6 +23,15 @@ if ((Test-Path "hklm:\SOFTWARE\Microsoft\VisualStudio\SxS\VS7") -or (Test-Path "
     Remove-Variable vsCommonToolsVersion
     Remove-Variable vsinstall
 
+    $env:GYP_MSVS_VERSION = @{
+                              "9.0"="2008";
+                              "10.0"="2010";
+                              "11.0"="2012";
+                              "12.0"="2013";
+                              "14.0"="2015";
+                              "15.0"="2017";
+                             }.Get_Item($vsVersion)
+
     Append-EnvPathIfExists (Join-Path $env:VSINSTALLDIR "Common7\Tools")
     Append-EnvPathIfExists (Join-Path $env:VSINSTALLDIR "Team Tools\Performance Tools")
     Append-EnvPathIfExists (Join-Path $env:VSINSTALLDIR "VSTSDB\Deploy")

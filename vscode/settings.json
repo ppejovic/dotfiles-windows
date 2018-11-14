@@ -2,5 +2,8 @@
     "terminal.external.windowsExec": "cmder",
     "files.exclude": {
         "**/.vs": true
-    }
+    },
+    "tfvc.location": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Professional\\Common7\\IDE\\CommonExtensions\\Microsoft\\TeamFoundation\\Team Explorer\\TF.exe",
+    "window.zoomLevel": 0,
+    "powershell.powerShellExePath": "C:\\WINDOWS\\SysWow64\\WindowsPowerShell\\v1.0\\powershell.exe"
 }

@@ -57,10 +57,11 @@ function Empty-RecycleBin {
 }
 
 # Sound Volume
-function Get-SoundVolume { [Audio]::Volume }
-function Set-SoundVolume([Int32] $volume) { [Audio]::Volume = ($volume / 100)}
+function Get-SoundVolume { [math]::Round([Audio]::Volume * 100) }
+function Set-SoundVolume([Parameter(mandatory=$true)][Int32] $Volume) { [Audio]::Volume = ($Volume / 100) }
 function Set-SoundMute { [Audio]::Mute = $true }
 function Set-SoundUnmute { [Audio]::Mute = $false }
+
 
 ### File System functions
 ### ----------------------------
@@ -278,4 +279,3 @@ function Out-Default
     .ForwardHelpCategory Cmdlet
     #>
 }
-
