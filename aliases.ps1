@@ -72,6 +72,7 @@ Set-Alias cleandisks Clean-Disks
 Set-Alias reload Reload-Powershell
 
 # http://xkcd.com/530/
+Set-Alias volume Set-SoundVolume
 Set-Alias mute Set-SoundMute
 Set-Alias unmute Set-SoundUnmute
 
