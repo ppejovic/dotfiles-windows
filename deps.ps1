@@ -52,7 +52,9 @@ choco install Opera               --limit-output; <# pin; evergreen #> choco pin
 # dev tools and frameworks
 choco install cmdermini           --limit-output
 choco install visualstudiocode    --limit-output
-choco install scriptcs            --limit-output  
+choco install scriptcs            --limit-output
+choco install vswhere             --limit-output
+
 
 choco install Fiddler4            --limit-output
 choco install winmerge            --limit-output

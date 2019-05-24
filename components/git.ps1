@@ -5,7 +5,7 @@ if ($null -ne (Get-Command git -ErrorAction SilentlyContinue)) {
     Start-SshAgent -Quiet
   }
 
-  function Set-LocationToGitRoot ([string] $solutionFile) {
+  function Set-LocationToGitRoot {
     $root = (git rev-parse --show-toplevel)
     
     if($null -ne $root) {
