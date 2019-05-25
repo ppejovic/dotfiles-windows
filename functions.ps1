@@ -3,7 +3,7 @@ function which($name) { Get-Command $name -ErrorAction SilentlyContinue | Select
 function touch($file) { "" | Out-File $file -Encoding ASCII }
 
 # Text editor
-function txted() { Invoke-Expression "$env:EDITOR $args ." }
+function ed() { Invoke-Expression "$env:EDITOR $args ." }
 
 # Common Editing needs
 function Edit-Hosts { Invoke-Expression "sudo $(if($env:EDITOR -ne $null)  {$env:EDITOR } else { 'notepad' }) $env:windir\system32\drivers\etc\hosts" }
