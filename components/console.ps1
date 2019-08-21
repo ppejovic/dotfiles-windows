@@ -186,21 +186,3 @@ function Convert-ConsoleColor {
     return [BitConverter]::ToInt32($bytes, 0)
 }
 
-$PSReadLineRegistry = Get-ItemProperty 'HKCU:\Console\PSReadLine' -ErrorAction SilentlyContinue
-Set-PSReadlineOption -Colors @{
-    Comment   = ($PSReadLineRegistry.CommentForeground  , "DarkGreen" -ne $null)[0]
-    Keyword   = ($PSReadLineRegistry.KeywordForeground  , "Green"     -ne $null)[0]
-    String    = ($PSReadLineRegistry.StringForeground   , "DarkCyan"  -ne $null)[0]
-    Operator  = ($PSReadLineRegistry.OperatorForeground , "DarkGray"  -ne $null)[0]
-    Variable  = ($PSReadLineRegistry.VariableForeground , "Green"     -ne $null)[0]
-    Command   = ($PSReadLineRegistry.CommandForeground  , "Yellow"    -ne $null)[0]
-    Parameter = ($PSReadLineRegistry.ParameterForeground, "DarkGray"  -ne $null)[0]
-    Type      = ($PSReadLineRegistry.TypeForeground     , "Gray"      -ne $null)[0]
-    Number    = ($PSReadLineRegistry.NumberForeground   , "White"     -ne $null)[0]
-    Member    = ($PSReadLineRegistry.MemberForeground   , "Gray"      -ne $null)[0]
-    Default   = ($PSReadLineRegistry.NormalForeground   , "$([System.Console]::ForegroundColor)" -ne $null)[0]
-    Emphasis  = ($PSReadLineRegistry.EmphasisForeground , "Cyan" -ne $null)[0]
-    Error     = ($PSReadLineRegistry.ErrorForeground    , "Red"  -ne $null)[0]
-}
-
-Remove-Variable PSReadLineRegistry

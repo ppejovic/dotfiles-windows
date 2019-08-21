@@ -1,9 +1,5 @@
-if ($null -ne (Get-Command git -ErrorAction SilentlyContinue)) {
-
-  if($null -ne (Get-Module -ListAvailable Posh-Git -ErrorAction SilentlyContinue)) {
-    Import-Module Posh-Git
-    Start-SshAgent -Quiet
-  }
+if (((Get-Command git -ErrorAction SilentlyContinue) -ne $null) -and ((Get-Module -ListAvailable Posh-Git -ErrorAction SilentlyContinue) -ne $null)) {
+  Import-Module Posh-Git
 
   function Set-LocationToGitRoot {
     $root = (git rev-parse --show-toplevel)
@@ -14,5 +10,4 @@ if ($null -ne (Get-Command git -ErrorAction SilentlyContinue)) {
   }
   
   Set-Alias -name cdr -Value Set-LocationToGitRoot
-
 }
